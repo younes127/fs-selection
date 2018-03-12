@@ -33,9 +33,13 @@ dependencies {
 - Choose any (file or folder) unique
 - Choose any (file or folder) multiple
 
-![ScreenShot](https://github.com/ioapps-dev/fs-selection/tree/master/screenshots/screenshot-1.png)
-![ScreenShot](https://github.com/ioapps-dev/fs-selection/tree/master/screenshots/screenshot-2.png)
-![ScreenShot](https://github.com/ioapps-dev/fs-selection/tree/master/screenshots/screenshot-3.png)
+<table><tr><td>
+<img width="200" alt="portfolio_view" src="https://raw.github.com/ioapps-dev/fs-selection/master/screenshots/screenshot-1.png">
+</td><td>
+<img width="200" alt="portfolio_view" src="https://raw.github.com/ioapps-dev/fs-selection/master/screenshots/screenshot-2.png">
+</td><td>
+<img width="200" alt="portfolio_view" src="https://raw.github.com/ioapps-dev/fs-selection/master/screenshots/screenshot-3.png">
+</td></tr></table>
 
 ## Usage
 There is a [sample](https://github.com/ioapps-dev/fs-selection/tree/master/sample) provided which shows how to use the library
