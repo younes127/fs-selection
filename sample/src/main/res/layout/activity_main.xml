@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose File:"/>
+
+        <Button
+            android:id="@+id/buttonChooseFile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose File"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonChooseFileByExt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose File By Ext"/>
+
+            <EditText
+                android:id="@+id/editTextFileByExt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=".png"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonChooseMultipleFiles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Multiple Files"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonChooseMultipleFilesByExt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose Multiple Files By Ext"/>
+
+            <EditText
+                android:id="@+id/editTextMultipleFilesByExt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=".jpg"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Folder:"/>
+
+        <Button
+            android:id="@+id/buttonChooseFolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Folder"/>
+
+        <Button
+            android:id="@+id/buttonChooseMultipleFolders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Multiple Folders"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Any:"/>
+
+        <Button
+            android:id="@+id/buttonChooseAnyUnique"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Any Unique"/>
+
+        <Button
+            android:id="@+id/buttonChooseAnyMultiple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Any Multiple"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Result:"/>
+
+        <EditText
+            android:id="@+id/editTextResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=".."/>
+    </LinearLayout>
+</ScrollView>
