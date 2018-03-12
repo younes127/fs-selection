@@ -114,21 +114,15 @@ public class FileSelector {
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.setType(type);
 
-        Intent chooserIntent = tryGetFsIntent(intent);
+        Intent chooserIntent = FsUtils.getFsIntent(context.getPackageManager(), intent);
+        if(chooserIntent == null && FsUtils.askUserInstall(context, mandatoryFs)) {
+            return;
+        }
 
         if(chooserIntent == null || !showOnlyFs) {
             chooserIntent = FsUtils.createAppChooser(context.getPackageManager(), intent, chooserTitle, null);
         }
 
         context.startActivityForResult(chooserIntent, requestCode);
-    }
-
-    private Intent tryGetFsIntent(Intent intent) {
-        Intent fsIntent = FsUtils.getFsIntent(context.getPackageManager(), intent);
-        if(fsIntent == null) {
-            FsUtils.askUserInstall(context, mandatoryFs);
-        }
-
-        return fsIntent;
     }
 }
