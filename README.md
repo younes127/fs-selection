@@ -55,6 +55,9 @@ There is a [sample](https://github.com/ioapps-dev/fs-selection/tree/master/sampl
 
         // Display file picker
         fileSelector.chooseUniqueFileByExtension("Choose File", "Select an image (jpg)", "jpg");
+	
+	// To show more apps although it is not recommended since they do not support the same filters. ex. 'file/multiple'
+	fileSelector.setShowOnlyFs(false);
     }
     
     @Override
