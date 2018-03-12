@@ -1,6 +1,7 @@
 package com.ioapps.fs_selection;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +11,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.LabeledIntent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +49,7 @@ public class FsUtils {
         return chooserIntent;
     }
 
-    /*package*/ static boolean askUserInstall(Context context, boolean mandatory) {
+    /*package*/ static boolean askUserInstall(final Context context, final boolean mandatory) {
         final SharedPreferences prefs = FsUtils.getSharedPrefs(context);
         boolean dontShowInstall = prefs.getBoolean(FsUtils.PREF_DONT_SHOW_INSTALL, false);
 
@@ -78,8 +80,11 @@ public class FsUtils {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                boolean dontShowMore = checkBoxNoShowMore.isChecked();
-                prefs.edit().putBoolean(FsUtils.PREF_DONT_SHOW_INSTALL, dontShowMore).commit();
+                if(!mandatory) {
+                    boolean dontShowMore = checkBoxNoShowMore.isChecked();
+                    prefs.edit().putBoolean(FsUtils.PREF_DONT_SHOW_INSTALL, dontShowMore).commit();
+                }
+                goToMarket(context, FS_PACKAGE, 0);
             }
         });
 
@@ -87,8 +92,10 @@ public class FsUtils {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
-                boolean dontShowMore = checkBoxNoShowMore.isChecked();
-                prefs.edit().putBoolean(FsUtils.PREF_DONT_SHOW_INSTALL, dontShowMore).commit();
+                if(!mandatory) {
+                    boolean dontShowMore = checkBoxNoShowMore.isChecked();
+                    prefs.edit().putBoolean(FsUtils.PREF_DONT_SHOW_INSTALL, dontShowMore).commit();
+                }
             }
         });
 
@@ -149,5 +156,41 @@ public class FsUtils {
         }
 
         return resultList;
+    }
+
+    private static String getMarketUri(String packageName) {
+        return "market://details?id=" + packageName;
+    }
+
+    private static String getMarketUrl(String packageName) {
+        return "https://play.google.com/store/apps/details?id=" + packageName;
+    }
+
+    private static boolean goToMarket(Context context, String packageName, int flags) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getMarketUri(packageName)));
+        intent.setPackage("com.android.vending");
+
+        if (flags != -1) {
+            intent.addFlags(flags);
+        }
+
+        try {
+            context.startActivity(intent);
+            return true;
+        } catch (ActivityNotFoundException e) {
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getMarketUrl(packageName)));
+
+            if (flags != -1) {
+                intent.addFlags(flags);
+            }
+
+            try {
+                context.startActivity(intent);
+                return true;
+            } catch (ActivityNotFoundException e1) {
+            }
+        }
+
+        return false;
     }
 }
