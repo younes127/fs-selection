@@ -11,7 +11,7 @@ public class FileSelector {
     private final Activity context;
     private String chooserTitle;
     private int requestCode = 1000001;
-    private boolean showOnlyFs = true, mandatoryFs = false;
+    private boolean showOnlyFs = true, mandatoryFs = true;
 
     public FileSelector(Activity context) {
         this.context = context;
