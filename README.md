@@ -52,12 +52,15 @@ There is a [sample](https://github.com/ioapps-dev/fs-selection/tree/master/sampl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fileSelector = new FileSelector(this);
-
-        // Display file picker
-        fileSelector.chooseUniqueFileByExtension("Choose File", "Select an image (jpg)", "jpg");
+	
+	// To assign a current directory
+	fileSelector.setCurrentDirectory(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
 	
 	// To show more apps although it is not recommended since they do not support the same filters. ex. 'file/multiple'
 	fileSelector.setShowOnlyFs(false);
+
+        // Display file picker
+        fileSelector.chooseUniqueFileByExtension("Choose File", "Select an image (jpg)", "jpg");
     }
     
     @Override
