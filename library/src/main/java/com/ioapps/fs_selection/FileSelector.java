@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class FileSelector {
@@ -12,6 +13,7 @@ public class FileSelector {
     private String chooserTitle;
     private int requestCode = 1000001;
     private boolean showOnlyFs = true, mandatoryFs = true;
+    private Uri currentUri;
 
     public FileSelector(Activity context) {
         this.context = context;
@@ -40,6 +42,14 @@ public class FileSelector {
 
     public void setMandatoryFs(boolean mandatoryFs) {
         this.mandatoryFs = mandatoryFs;
+    }
+
+    public void setCurrentDirectory(Uri uri) {
+        currentUri = uri;
+    }
+
+    public void setCurrentDirectory(File file) {
+        currentUri = Uri.fromFile(file);
     }
 
     public void chooseUniqueFile(String title, String subject) {
@@ -113,6 +123,7 @@ public class FileSelector {
         intent.putExtra(Intent.EXTRA_TITLE, title);
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.setType(type);
+        intent.setData(currentUri);
 
         Intent chooserIntent = FsUtils.getFsIntent(context.getPackageManager(), intent);
         if(chooserIntent == null && FsUtils.askUserInstall(context, mandatoryFs)) {
