@@ -27,7 +27,7 @@ public class FsUtils {
     private static final String FS_PREFS = "fs-prefs";
     private static final String PREF_DONT_SHOW_INSTALL = "dont-show-install";
 
-    /*package*/ static Intent getFsIntent(PackageManager pm, Intent intent) {
+    /*package*/ static Intent getFsChooserIntent(PackageManager pm, Intent intent) {
         ApplicationInfo appInfo = getAppInfo(pm, FS_PACKAGE);
         if(appInfo == null) {
             return null;
@@ -37,7 +37,19 @@ public class FsUtils {
         Intent fsIntent = new Intent(intent);
         fsIntent.setPackage(FS_PACKAGE);
         fsIntent.setComponent(new ComponentName(FS_PACKAGE, FS_PACKAGE + ".ChooserActivity"));
-        //return new LabeledIntent(newIntent, FS_PACKAGE, appInfo.labelRes, appInfo.icon);
+        return fsIntent;
+    }
+
+    /*package*/ static Intent getFsMainIntent(PackageManager pm, Intent intent) {
+        ApplicationInfo appInfo = getAppInfo(pm, FS_PACKAGE);
+        if(appInfo == null) {
+            return null;
+        }
+
+
+        Intent fsIntent = new Intent(intent);
+        fsIntent.setPackage(FS_PACKAGE);
+        fsIntent.setComponent(new ComponentName(FS_PACKAGE, FS_PACKAGE + ".MainActivity"));
         return fsIntent;
     }
 
