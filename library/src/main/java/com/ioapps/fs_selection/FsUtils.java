@@ -21,13 +21,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings({"WeakerAccess", "UnusedReturnValue", "SameParameterValue"})
 public class FsUtils {
 
     private static final String FS_PACKAGE = "com.ioapps.fileselector";
     private static final String FS_PREFS = "fs-prefs";
     private static final String PREF_DONT_SHOW_INSTALL = "dont-show-install";
 
-    /*package*/ static Intent getFsChooserIntent(PackageManager pm, Intent intent) {
+    public static Intent getFsChooserIntent(PackageManager pm, Intent intent) {
         ApplicationInfo appInfo = getAppInfo(pm, FS_PACKAGE);
         if(appInfo == null) {
             return null;
@@ -40,7 +41,7 @@ public class FsUtils {
         return fsIntent;
     }
 
-    /*package*/ static Intent getFsMainIntent(PackageManager pm, Intent intent) {
+    public static Intent getFsMainIntent(PackageManager pm, Intent intent) {
         ApplicationInfo appInfo = getAppInfo(pm, FS_PACKAGE);
         if(appInfo == null) {
             return null;
