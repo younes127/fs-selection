@@ -7,6 +7,7 @@ import android.net.Uri;
 import java.io.File;
 import java.util.ArrayList;
 
+@SuppressWarnings({"SameParameterValue", "WeakerAccess"})
 public class FileSelector {
 
     private final Activity context;
@@ -84,6 +85,38 @@ public class FileSelector {
         chooseFile(title, subject, "any/multiple");
     }
 
+    public void openFolder(Uri uri) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(uri, "resource/folder");
+
+        Intent fsIntent = getFsIntent(intent, false);
+        if(fsIntent == null) {
+            return;
+        }
+
+        context.startActivity(fsIntent);
+    }
+
+    public void openFolder(File file) {
+        openFolder(Uri.fromFile(file));
+    }
+
+    public void editTextFile(Uri uri) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(uri, "text/");
+
+        Intent fsIntent = getFsIntent(intent, false);
+        if(fsIntent == null) {
+            return;
+        }
+
+        context.startActivity(fsIntent);
+    }
+
+    public void editTextFile(File file) {
+        editTextFile(Uri.fromFile(file));
+    }
+
     /**
      * Must be called from {@link Activity#onActivityResult(int, int, Intent)} of the involved
      * activity.
@@ -122,18 +155,28 @@ public class FileSelector {
         final Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.putExtra(Intent.EXTRA_TITLE, title);
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        intent.setType(type);
-        intent.setData(currentUri);
+        intent.setDataAndType(currentUri, type);
 
-        Intent chooserIntent = FsUtils.getFsIntent(context.getPackageManager(), intent);
-        if(chooserIntent == null && FsUtils.askUserInstall(context, mandatoryFs)) {
+        Intent chooserIntent = getFsIntent(intent, true);
+        if(chooserIntent == null) {
             return;
         }
 
-        if(chooserIntent == null || !showOnlyFs) {
-            chooserIntent = FsUtils.createAppChooser(context.getPackageManager(), intent, chooserTitle, null);
+        context.startActivityForResult(chooserIntent, requestCode);
+    }
+
+    private Intent getFsIntent(Intent intent, boolean isChooser) {
+        Intent fsIntent = isChooser?
+                FsUtils.getFsChooserIntent(context.getPackageManager(), intent):
+                FsUtils.getFsMainIntent(context.getPackageManager(), intent);
+        if(fsIntent == null && FsUtils.askUserInstall(context, mandatoryFs)) {
+            return null;
         }
 
-        context.startActivityForResult(chooserIntent, requestCode);
+        if(!showOnlyFs) {
+            fsIntent = FsUtils.createAppChooser(context.getPackageManager(), intent, chooserTitle);
+        }
+
+        return fsIntent;
     }
 }
