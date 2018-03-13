@@ -32,6 +32,8 @@ dependencies {
 - Choose multiple folder
 - Choose any (file or folder) unique
 - Choose any (file or folder) multiple
+- Open specified folder
+- Edit text file
 
 <table><tr><td>
 <img width="200" alt="portfolio_view" src="https://raw.github.com/ioapps-dev/fs-selection/master/screenshots/screenshot-1.png">
