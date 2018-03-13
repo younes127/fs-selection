@@ -111,5 +111,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=".."/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Others:"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonOpenFolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Open Folder"/>
+
+            <EditText
+                android:id="@+id/editTextOpenFolder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="/sdcard"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonEditTextFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit Text File"/>
+
+            <EditText
+                android:id="@+id/editTextEditTextFile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="/sdcard/text-file.txt"/>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
