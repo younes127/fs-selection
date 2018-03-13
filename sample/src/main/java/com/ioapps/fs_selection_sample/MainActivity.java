@@ -10,13 +10,16 @@ import android.widget.EditText;
 
 import com.ioapps.fs_selection.FileSelector;
 
+import java.io.File;
+
 
 public class MainActivity extends Activity {
 
     private Button buttonChooseFile, buttonChooseFileByExt, buttonChooseMultipleFiles, buttonChooseMultipleFilesByExt,
             buttonChooseFolder, buttonChooseMultipleFolders,
-            buttonChooseAnyUnique, buttonChooseAnyMultiple;
-    private EditText editTextFileByExt, editTextMultipleFilesByExt, editTextResult;
+            buttonChooseAnyUnique, buttonChooseAnyMultiple,
+            buttonOpenFolder, buttonEditTextFile;
+    private EditText editTextFileByExt, editTextMultipleFilesByExt, editTextResult, editTextOpenFolder, editTextEditTextFile;
 
     private FileSelector fileSelector;
 
@@ -34,9 +37,15 @@ public class MainActivity extends Activity {
         buttonChooseMultipleFolders = (Button) findViewById(R.id.buttonChooseMultipleFolders);
         buttonChooseAnyUnique = (Button) findViewById(R.id.buttonChooseAnyUnique);
         buttonChooseAnyMultiple = (Button) findViewById(R.id.buttonChooseAnyMultiple);
+        buttonOpenFolder = (Button) findViewById(R.id.buttonOpenFolder);
+        buttonEditTextFile = (Button) findViewById(R.id.buttonEditTextFile);
         editTextFileByExt = (EditText) findViewById(R.id.editTextFileByExt);
         editTextMultipleFilesByExt = (EditText) findViewById(R.id.editTextMultipleFilesByExt);
         editTextResult = (EditText) findViewById(R.id.editTextResult);
+        editTextOpenFolder = (EditText) findViewById(R.id.editTextOpenFolder);
+        editTextEditTextFile = (EditText) findViewById(R.id.editTextEditTextFile);
+
+        //fileSelector.setCurrentDirectory(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
 
         buttonChooseFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +104,22 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 fileSelector.chooseAnyMultiple("Choose Any Multiple", null);
+            }
+        });
+
+        buttonOpenFolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String folderPath = editTextOpenFolder.getText().toString();
+                fileSelector.openFolder(new File(folderPath));
+            }
+        });
+
+        buttonEditTextFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String filePath = editTextEditTextFile.getText().toString();
+                fileSelector.editTextFile(new File(filePath));
             }
         });
     }
