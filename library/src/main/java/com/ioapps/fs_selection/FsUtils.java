@@ -24,7 +24,7 @@ import java.util.List;
 @SuppressWarnings({"WeakerAccess", "UnusedReturnValue", "SameParameterValue"})
 public class FsUtils {
 
-    private static final String FS_PACKAGE = "com.ioapps.fileselector";
+    private static final String FS_PACKAGE = "com.ioapps.fsexplorer";
     private static final String FS_PREFS = "fs-prefs";
     private static final String PREF_DONT_SHOW_INSTALL = "dont-show-install";
 
