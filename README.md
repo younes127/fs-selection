@@ -1,5 +1,5 @@
 ## fs-selection
-Simple library to use [File Selector](https://play.google.com/store/apps/details?id=com.ioapps.fileselector) as File Picker.
+Simple library to use [File Selector](https://play.google.com/store/apps/details?id=com.ioapps.fsexplorer) as File Picker.
 If the user does not have 'File Selector', it displays a dialog to request the installation.
 
 [![](https://jitpack.io/v/ioapps-dev/fs-selection.svg)](https://jitpack.io/#ioapps-dev/fs-selection)
