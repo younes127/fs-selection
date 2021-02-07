@@ -2,7 +2,7 @@
     <string name="select_chooser">Select App</string>
     <string name="required_action">Required Action</string>
     <string name="please_install_sile_selector">
-        Please install \'File Selector\' to carry out the operation. This application needs to select specific or multiple files and for this \'File Selector\' is the best option.
+        Please install \'FS Explorer\' to carry out the operation. This application needs to select specific or multiple files and for this \'FS Explorer\' is the best option.
     </string>
     <string name="no_show_more_this_alert">No show more this alert</string>
     <string name="accept">Accept</string>

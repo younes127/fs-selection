@@ -154,5 +154,24 @@
                 android:layout_weight="1"
                 android:text="/sdcard/text-file.txt"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonZipViewer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Explore ZIP File"/>
+
+            <EditText
+                android:id="@+id/editTextZipViewer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="/sdcard/archive.zip"/>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

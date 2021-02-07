@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
-import java.io.File;
 import java.util.ArrayList;
 
 @SuppressWarnings({"SameParameterValue", "WeakerAccess"})
@@ -12,7 +11,7 @@ public class FileSelector {
 
     private final Activity context;
     private String chooserTitle;
-    private int requestCode = 1000001;
+    private int requestCode = 5555;
     private boolean showOnlyFs = true, mandatoryFs = true;
     private Uri currentUri;
 
@@ -47,10 +46,6 @@ public class FileSelector {
 
     public void setCurrentDirectory(Uri uri) {
         currentUri = uri;
-    }
-
-    public void setCurrentDirectory(File file) {
-        currentUri = Uri.fromFile(file);
     }
 
     public void chooseUniqueFile(String title, String subject) {
@@ -89,23 +84,19 @@ public class FileSelector {
         final Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(uri, "resource/folder");
 
-        Intent fsIntent = getFsIntent(intent, false);
+        Intent fsIntent = getFsIntent(intent, FsActivity.MAIN);
         if(fsIntent == null) {
             return;
         }
 
         context.startActivity(fsIntent);
-    }
-
-    public void openFolder(File file) {
-        openFolder(Uri.fromFile(file));
     }
 
     public void editTextFile(Uri uri) {
         final Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(uri, "text/");
+        intent.setDataAndType(uri, "text/plain");
 
-        Intent fsIntent = getFsIntent(intent, false);
+        Intent fsIntent = getFsIntent(intent, FsActivity.TEXT_EDITOR);
         if(fsIntent == null) {
             return;
         }
@@ -113,8 +104,16 @@ public class FileSelector {
         context.startActivity(fsIntent);
     }
 
-    public void editTextFile(File file) {
-        editTextFile(Uri.fromFile(file));
+    public void exploreZipFile(Uri uri) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(uri, "application/zip");
+
+        Intent fsIntent = getFsIntent(intent, FsActivity.ZIP_VIEWER);
+        if(fsIntent == null) {
+            return;
+        }
+
+        context.startActivity(fsIntent);
     }
 
     /**
@@ -157,7 +156,7 @@ public class FileSelector {
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.setDataAndType(currentUri, type);
 
-        Intent chooserIntent = getFsIntent(intent, true);
+        Intent chooserIntent = getFsIntent(intent, FsActivity.CHOOSER);
         if(chooserIntent == null) {
             return;
         }
@@ -165,10 +164,8 @@ public class FileSelector {
         context.startActivityForResult(chooserIntent, requestCode);
     }
 
-    private Intent getFsIntent(Intent intent, boolean isChooser) {
-        Intent fsIntent = isChooser?
-                FsUtils.getFsChooserIntent(context.getPackageManager(), intent):
-                FsUtils.getFsMainIntent(context.getPackageManager(), intent);
+    public Intent getFsIntent(Intent intent, FsActivity fsActivity) {
+        Intent fsIntent = FsUtils.getFsIntent(context.getPackageManager(), intent, fsActivity);
         if(fsIntent == null && FsUtils.askUserInstall(context, mandatoryFs)) {
             return null;
         }

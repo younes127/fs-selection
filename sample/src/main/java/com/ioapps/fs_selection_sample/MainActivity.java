@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,8 +19,8 @@ public class MainActivity extends Activity {
     private Button buttonChooseFile, buttonChooseFileByExt, buttonChooseMultipleFiles, buttonChooseMultipleFilesByExt,
             buttonChooseFolder, buttonChooseMultipleFolders,
             buttonChooseAnyUnique, buttonChooseAnyMultiple,
-            buttonOpenFolder, buttonEditTextFile;
-    private EditText editTextFileByExt, editTextMultipleFilesByExt, editTextResult, editTextOpenFolder, editTextEditTextFile;
+            buttonOpenFolder, buttonEditTextFile, buttonZipViewer;
+    private EditText editTextFileByExt, editTextMultipleFilesByExt, editTextResult, editTextOpenFolder, editTextEditTextFile, editTextZipViewer;
 
     private FileSelector fileSelector;
 
@@ -27,6 +28,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
         fileSelector = new FileSelector(this);
 
         buttonChooseFile = (Button) findViewById(R.id.buttonChooseFile);
@@ -39,11 +44,13 @@ public class MainActivity extends Activity {
         buttonChooseAnyMultiple = (Button) findViewById(R.id.buttonChooseAnyMultiple);
         buttonOpenFolder = (Button) findViewById(R.id.buttonOpenFolder);
         buttonEditTextFile = (Button) findViewById(R.id.buttonEditTextFile);
+        buttonZipViewer = (Button) findViewById(R.id.buttonZipViewer);
         editTextFileByExt = (EditText) findViewById(R.id.editTextFileByExt);
         editTextMultipleFilesByExt = (EditText) findViewById(R.id.editTextMultipleFilesByExt);
         editTextResult = (EditText) findViewById(R.id.editTextResult);
         editTextOpenFolder = (EditText) findViewById(R.id.editTextOpenFolder);
         editTextEditTextFile = (EditText) findViewById(R.id.editTextEditTextFile);
+        editTextZipViewer = (EditText) findViewById(R.id.editTextZipViewer);
 
         //fileSelector.setCurrentDirectory(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
 
@@ -111,7 +118,8 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 String folderPath = editTextOpenFolder.getText().toString();
-                fileSelector.openFolder(new File(folderPath));
+                Uri uri = Uri.fromFile(new File(folderPath));
+                fileSelector.openFolder(uri);
             }
         });
 
@@ -119,7 +127,17 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 String filePath = editTextEditTextFile.getText().toString();
-                fileSelector.editTextFile(new File(filePath));
+                Uri uri = Uri.fromFile(new File(filePath));
+                fileSelector.editTextFile(uri);
+            }
+        });
+
+        buttonZipViewer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String filePath = editTextZipViewer.getText().toString();
+                Uri uri = Uri.fromFile(new File(filePath));
+                fileSelector.exploreZipFile(uri);
             }
         });
     }

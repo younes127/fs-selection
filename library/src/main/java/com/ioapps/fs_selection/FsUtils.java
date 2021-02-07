@@ -28,7 +28,7 @@ public class FsUtils {
     private static final String FS_PREFS = "fs-prefs";
     private static final String PREF_DONT_SHOW_INSTALL = "dont-show-install";
 
-    public static Intent getFsChooserIntent(PackageManager pm, Intent intent) {
+    /*package*/ static Intent getFsIntent(PackageManager pm, Intent intent, FsActivity fsActivity) {
         ApplicationInfo appInfo = getAppInfo(pm, FS_PACKAGE);
         if(appInfo == null) {
             return null;
@@ -37,20 +37,7 @@ public class FsUtils {
 
         Intent fsIntent = new Intent(intent);
         fsIntent.setPackage(FS_PACKAGE);
-        fsIntent.setComponent(new ComponentName(FS_PACKAGE, FS_PACKAGE + ".ChooserActivity"));
-        return fsIntent;
-    }
-
-    public static Intent getFsMainIntent(PackageManager pm, Intent intent) {
-        ApplicationInfo appInfo = getAppInfo(pm, FS_PACKAGE);
-        if(appInfo == null) {
-            return null;
-        }
-
-
-        Intent fsIntent = new Intent(intent);
-        fsIntent.setPackage(FS_PACKAGE);
-        fsIntent.setComponent(new ComponentName(FS_PACKAGE, FS_PACKAGE + ".MainActivity"));
+        fsIntent.setComponent(new ComponentName(FS_PACKAGE, FS_PACKAGE + "." + fsActivity.name));
         return fsIntent;
     }
 
@@ -58,7 +45,7 @@ public class FsUtils {
         List<LabeledIntent> intentList = getLabeledIntents(pm, intent, patterns);
         Intent targetIntent = !intentList.isEmpty() ? intentList.remove(0) : intent;
         Intent chooserIntent = Intent.createChooser(targetIntent, title);
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentList.toArray(new Parcelable[intentList.size()]));
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentList.toArray(new Parcelable[0]));
         return chooserIntent;
     }
 
@@ -82,20 +69,19 @@ public class FsUtils {
         dialogBuilder.setTitle(R.string.required_action);
         dialogBuilder.setView(view);
 
-        dialogBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+        /*dialogBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                // TODO ..
             }
-        });
+        });*/
 
         dialogBuilder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 if(!mandatory) {
-                    boolean dontShowMore = checkBoxNoShowMore.isChecked();
-                    prefs.edit().putBoolean(FsUtils.PREF_DONT_SHOW_INSTALL, dontShowMore).commit();
+                    boolean noShowMore = checkBoxNoShowMore.isChecked();
+                    prefs.edit().putBoolean(FsUtils.PREF_DONT_SHOW_INSTALL, noShowMore).commit();
                 }
                 goToMarket(context, FS_PACKAGE, 0);
             }
@@ -106,8 +92,8 @@ public class FsUtils {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
                 if(!mandatory) {
-                    boolean dontShowMore = checkBoxNoShowMore.isChecked();
-                    prefs.edit().putBoolean(FsUtils.PREF_DONT_SHOW_INSTALL, dontShowMore).commit();
+                    boolean noShowMore = checkBoxNoShowMore.isChecked();
+                    prefs.edit().putBoolean(FsUtils.PREF_DONT_SHOW_INSTALL, noShowMore).commit();
                 }
             }
         });
@@ -200,7 +186,7 @@ public class FsUtils {
             try {
                 context.startActivity(intent);
                 return true;
-            } catch (ActivityNotFoundException e1) {
+            } catch (ActivityNotFoundException ignored) {
             }
         }
 
