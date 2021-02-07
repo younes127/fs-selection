@@ -56,8 +56,9 @@ There is a [sample](https://github.com/ioapps-dev/fs-selection/tree/master/sampl
         setContentView(R.layout.activity_main);
         fileSelector = new FileSelector(this);
 	
-	// To assign a current directory
-	fileSelector.setCurrentDirectory(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+	// To assign a current directory (You can use your FileProvider)
+	Uri uri = Uri.fromFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+	fileSelector.setCurrentDirectory(uri);
 	
 	// To show more apps although it is not recommended since they do not support the same filters. ex. 'file/multiple'
 	fileSelector.setShowOnlyFs(false);
