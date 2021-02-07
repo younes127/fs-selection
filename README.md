@@ -19,7 +19,7 @@ allprojects {
 Then, add the library to your module `build.gradle`
 ```gradle
 dependencies {
-    implementation 'com.github.ioapps-dev:fs-selection:latest.release.here'
+    implementation 'com.github.ioapps-dev:fs-selection:2.0.1'
 }
 ```
 
@@ -34,6 +34,7 @@ dependencies {
 - Choose any (file or folder) multiple
 - Open specified folder
 - Edit text file
+- Explore zip file
 
 <table><tr><td>
 <img width="200" alt="portfolio_view" src="https://raw.github.com/ioapps-dev/fs-selection/master/screenshots/screenshot-1.png">
